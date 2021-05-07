@@ -1,17 +1,12 @@
 const { Sequelize, Model, DataTypes, TimeoutError } = require('sequelize');
 const sequelize = require('../database_connect');
 
-// Schéma de données de l'utilisateur
-const User = sequelize.define('user', {
-  email: {
-    type: Sequelize.DataTypes.TEXT,
+// Schéma des messages
+const Message = sequelize.define('user', {
+  conversationId: {
+    field: 'conversation_id',
+    type: Sequelize.DataTypes.INTEGER,
     allowNull: false,
-    unique: true,
-    isEmail: true
-  },
-  password: {
-    type: Sequelize.DataTypes.STRING(64),
-    is: /^[0-9a-f]{64}$/i
   },
   createdAt: {
     field: 'created_at',
@@ -21,15 +16,15 @@ const User = sequelize.define('user', {
     field: 'updated_at',
     type: Sequelize.DataTypes.DATE
   },
-  firstname: {
-    field: 'prenom',
+  content: {
     type: Sequelize.DataTypes.TEXT,
   },
-  lastname: {
-    field: 'nom',
-    type: Sequelize.DataTypes.TEXT,
-  }
+  userId: {
+    field: 'userId',
+    type: Sequelize.DataTypes.INTEGER(10),
+  },
+
 });
 
 // Exportation du schema d'inscription
-module.exports = User;
+module.exports = Message;

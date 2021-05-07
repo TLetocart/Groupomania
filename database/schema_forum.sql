@@ -46,7 +46,7 @@ CREATE TABLE `forum` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
-  `update_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   `userId` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `forum_name_uindex` (`name`),
@@ -61,7 +61,7 @@ CREATE TABLE `forum` (
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `conversion_id` int NOT NULL,
+  `conversation_id` int NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   `content` text,
@@ -70,7 +70,7 @@ CREATE TABLE `message` (
   UNIQUE KEY `message_id_uindex` (`id`),
   KEY `message_conversation_id_fk` (`conversion_id`),
   CONSTRAINT `message_conversation_id_fk` FOREIGN KEY (`conversation_id`) REFERENCES `conversation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `message_userId_posts` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  CONSTRAINT `message_userId_posts` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `users`;
@@ -79,7 +79,7 @@ CREATE TABLE `users` (
   `nom` varchar(40) NOT NULL,
   `prenom` varchar(40) NOT NULL,
   `password` varchar(80) NOT NULL,
-  `email` varchar(80) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `admin` tinyint(2) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -4,21 +4,11 @@ const express = require("express");
 var bodyParser = require('body-parser');
 // Permet de gérer les requêtes HTTP
 const cors = require('cors');
-const signup = require('./routes/signup.js');
-const sauces = require ('./routes/sauce.js');
 
-// On fait appel à la base de données
-const mongoose = require('mongoose');
+const dbconnect = require('./database_connect.js');
+const userRoutes = require('./routes/user');
+const postRoutes = require('./routes/post');
 
-// Connexion à la base de données avec une variable d'environnement pour proteger les infos de connexions a la base de donnée
-require('dotenv').config();
-
-mongoose.connect(process.env.DB_URI,
-  { useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
 
@@ -34,9 +24,9 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-app.use('/api/auth', signup);
+app.use('/api/auth', userRoutes);
 
-app.use('/api/sauces', sauces);
+app.use('/backend/posts', postRoutes);
 
 module.exports = app;
 

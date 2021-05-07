@@ -1,19 +1,6 @@
-const mysql = require('mysql');
+const { Sequelize, Model, DataTypes } = require('sequelize');
 require('dotenv').config();
 
-const sql = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME
-});
+const sequelize = new Sequelize(process.env.DB_URI);
 
-sql.connect(function (err) {
-    if (err) {
-        return console.error('error: ' + err.message);
-    }
-
-    console.log('Connection à la base de donnée réussie !');
-});
-
-module.exports = sql;
+module.exports = sequelize;

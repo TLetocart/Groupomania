@@ -13,12 +13,12 @@ exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       // Création d'un utilisateur avec le schema de incription.js
-      const user = new User({
+      const user = User.create({
         email: req.body.email,
-        password: hash
-      });
-      // On enregistre l'utilisateur dans MongoDB
-      user.save()
+        password: hash,
+        lastname: req.body.lastname,
+        firstname: req.body.firstname
+      })
         .then(() => res.status(201).json({
           message: 'Utilisateur enregistré.'
         }))
@@ -36,7 +36,7 @@ exports.signup = (req, res, next) => {
 exports.login = (req, res, next) => {
   // On cherche l'utilisateur dans la base
   User.findOne({
-      email: req.body.email
+      where : { email: req.body.email}
     })
     .then(user => {
       if (!user) {
@@ -44,6 +44,7 @@ exports.login = (req, res, next) => {
           error: 'Utilisateur non trouvé !'
         });
       }
+
       // On compare les hashs
       bcrypt.compare(req.body.password, user.password)
         .then(valid => {
@@ -70,5 +71,6 @@ exports.login = (req, res, next) => {
         }));
     })
     .catch(error => res.status(500).json({
+      error: error
     }));
 };
