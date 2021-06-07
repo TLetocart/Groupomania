@@ -2,7 +2,7 @@ const { Sequelize, Model, DataTypes, TimeoutError } = require('sequelize');
 const sequelize = require('../database_connect');
 
 // Schéma du forum
-const Forum = sequelize.define('user', {
+const Forum = sequelize.define('forum', {
   name: {
     type: Sequelize.DataTypes.TEXT,
     allowNull: false,
@@ -14,12 +14,9 @@ const Forum = sequelize.define('user', {
   updatedAt: {
     field: 'updated_at',
     type: Sequelize.DataTypes.DATE
-  },
-  userId: {
-    field: 'userId',
-    type: Sequelize.DataTypes.INTEGER(10),
-  },
-
+  }
+}, {
+  tableName: 'forum'
 });
 
 // Exportation du schema d'inscription

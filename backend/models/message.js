@@ -2,7 +2,7 @@ const { Sequelize, Model, DataTypes, TimeoutError } = require('sequelize');
 const sequelize = require('../database_connect');
 
 // Schéma des messages
-const Message = sequelize.define('user', {
+const Message = sequelize.define('message', {
   conversationId: {
     field: 'conversation_id',
     type: Sequelize.DataTypes.INTEGER,
@@ -24,7 +24,11 @@ const Message = sequelize.define('user', {
     type: Sequelize.DataTypes.INTEGER(10),
   },
 
-});
+},
+{
+  tableName: 'message'
+}
+);
 
 // Exportation du schema d'inscription
 module.exports = Message;

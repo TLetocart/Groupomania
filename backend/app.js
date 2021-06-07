@@ -1,13 +1,11 @@
 // Framework de Node.js
 const express = require("express");
-// Middleware permettant de gérer les middlewares
-var bodyParser = require('body-parser');
 // Permet de gérer les requêtes HTTP
 const cors = require('cors');
 
 const dbconnect = require('./database_connect.js');
 const userRoutes = require('./routes/user');
-const postRoutes = require('./routes/post');
+const conversationRoutes = require('./routes/conversation');
 
 
 const app = express();
@@ -17,16 +15,16 @@ const path = require('path');
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //Transformer les données POST en objet JSON pour les exploiter
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
   extended: true
 }));
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use(cors());
 
 app.use('/api/auth', userRoutes);
 
-app.use('/backend/posts', postRoutes);
+app.use('/api/conversations', conversationRoutes);
 
 module.exports = app;
 

@@ -19,6 +19,7 @@ const User = sequelize.define('user', {
   },
   updatedAt: {
     field: 'updated_at',
+    allowNull: true,
     type: Sequelize.DataTypes.DATE
   },
   firstname: {

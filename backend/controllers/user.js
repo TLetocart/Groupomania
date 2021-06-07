@@ -7,6 +7,8 @@ const User = require('../models/users.js');
 // On utilise un token lors de la connexion de l'utilisateur, pour vérifier sa connexion
 const jwt = require('jsonwebtoken');
 
+require("dotenv").config();
+
 // On crée un utilisateur
 exports.signup = (req, res, next) => {
   // On utilise le hash proposé par bcrypt
@@ -57,9 +59,9 @@ exports.login = (req, res, next) => {
             userId: user._id,
             token: jwt.sign(
               {
-                userId: user._id
+                userId: user.id
               },
-              'RANDOM_TOKEN_SECRET',
+              process.env.JWT_TOKEN,
               {
                 expiresIn: '24h' // Délai d'expiration du token
               }
