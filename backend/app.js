@@ -6,7 +6,7 @@ const cors = require('cors');
 const dbconnect = require('./database_connect.js');
 const userRoutes = require('./routes/user');
 const conversationRoutes = require('./routes/conversation');
-
+const forumRoutes = require('./routes/forum.js');
 
 const app = express();
 
@@ -25,6 +25,8 @@ app.use(cors());
 app.use('/api/auth', userRoutes);
 
 app.use('/api/conversations', conversationRoutes);
+
+app.use('/api/forum', forumRoutes);
 
 module.exports = app;
 

@@ -109,22 +109,34 @@ exports.newComment = (request, response, next) => {
 };
 
 
-exports.getAllComments = (req, res, next) => {
+exports.getAllComments = (request, response, next) => {
     models.message.findAll({
-        where: {
-            
-        }
-    })
+        include: [
+            {
+                model: models.user,
+                attributes:{ exclude: ['password']}
+            },
+        ],
+        
+    }).then(result=>{
+        return response.status(200).json(result);
+    }); 
 };
 
 
-exports.deleteComment = (req, res, next) => {
-    // db.query(`DELETE FROM comments WHERE comments.id = ${req.params.id}`, (error, result, field) => {
-    //     if (error) {
-    //         return res.status(400).json({
-    //             error
-    //         });
-    //     }
-    //     return res.status(200).json(result);
-    // });
+exports.deleteComment = (request, response, next) => {
+    models.conversation.findOne({
+        where:{id:request.params.id},
+    }).then(result=>{
+        if(request.userId != result.userId){
+            return response.status(403).json(result);
+        } 
+        models.message.destroy({where:{id:request.params.id}}).then(result => {
+            response.status(204).json(result);
+        }).catch(error =>{
+            return response.status(404).json({
+                error
+            });
+        });
+    });
 };
