@@ -11,6 +11,9 @@ exports.getAllConversation = (req, res, next) => {
             },
             {
                 model: models.forum
+            },
+            {
+                model: models.message
             }
         ],
         

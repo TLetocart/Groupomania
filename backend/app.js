@@ -24,7 +24,7 @@ app.use(cors());
 
 app.use('/api/auth', userRoutes);
 
-app.use('/api/conversations', conversationRoutes);
+app.use('/api/posts', conversationRoutes);
 
 app.use('/api/forum', forumRoutes);
 
