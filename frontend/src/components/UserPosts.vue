@@ -21,10 +21,10 @@ export default {
         }
     },
     mounted(){
-        this.getUserPosts();
+        this.getUserConversation();
     },
     methods: {
-        getUserPosts(){
+        getUserConversation(){
             const userId = this.$user.userId;
             
             axios.get(`${this.$apiUrl}/posts/user${userId}/posts`,

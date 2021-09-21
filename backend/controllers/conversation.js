@@ -143,3 +143,25 @@ exports.deleteComment = (request, response, next) => {
         });
     });
 };
+
+exports.modifyOnePost = (req, res, next) => {
+    db.query(`UPDATE posts SET title = '${req.body.title}', content = '${req.body.content}' WHERE posts.id = ${req.params.id}`, (error, result, field) => {
+        if (error) {
+            return res.status(400).json({
+                error
+            });
+        }
+        return res.status(200).json(result);
+    });
+};
+
+exports.getUserPosts = (req, res, next) => {
+    db.query(`SELECT * FROM posts WHERE posts.userId = ${req.params.id}`, (error, result, field) => {
+        if (error) {
+            return res.status(400).json({
+                error
+            });
+        }
+        return res.status(200).json(result);
+    });
+};

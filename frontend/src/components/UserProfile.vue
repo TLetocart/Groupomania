@@ -2,7 +2,7 @@
     <div class="UserProfile">
         <div class="profile-info">
             <h2>Bonjour,</h2>
-            <span>{{this.$user.nom}}</span> <span>{{this.$user.prenom}}</span>
+            <span>{{this.$user.firstname}}</span> <span>{{this.$user.lastname}}</span>
         </div>
 
         <div class="delete-profile" @click="deleteUser()">Supprimer le compte</div>

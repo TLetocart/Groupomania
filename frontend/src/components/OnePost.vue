@@ -2,6 +2,7 @@
     <div class="onePost">
         <div class="post-wrapper" v-if="!modify">
             <h2 class="post-title">{{post.title}}</h2>
+            <div class="post-content" v-html="characterLimit(post)"></div>
         </div>
 
         <div class="modify-wrapper" v-if="modify">
@@ -81,9 +82,9 @@ export default {
                 }
             })
         },
+
         deleteOnePost(){
             const postId = this.$route.params.id;
-            
             axios.delete(`${this.$apiUrl}/posts/${postId}`,
                 {
                     headers: {
@@ -94,6 +95,18 @@ export default {
             )
             .then(location.href = "/");
         },
+
+        characterLimit(post){
+            const maxLength = 350;
+            const content = post.messages[0].content;
+            if(content.length > maxLength){
+                return content.substring(0, maxLength - 3) + "...";
+            } 
+            else{
+                return content;
+            }
+        },
+
         modifyOnePost(){
             const postId = this.$route.params.id;
             const title = document.querySelector('#modify-title').value;
@@ -171,7 +184,8 @@ export default {
         border-radius: 10px;
         transition-duration: 0.2s;
         cursor: pointer;
-        margin: 0px 20px 50px 20px;
+        margin: auto auto 10px;
+        display: flex;
     }
     .delete-btn{
         background-color: red !important;
