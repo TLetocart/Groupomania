@@ -10,14 +10,15 @@
         <h2 v-if="comments.length > 0">Commentaires :</h2>
 
         <div class="comments">
-            <div class="comment" v-for="comment in comments" :key="comment.id">
-            <div class="comment-info">Par {{comment.user.firstname}} {{comment.user.lastname}} le {{dateFormat(comment.createdAt)}} 
-                <span @click="deleteComment(comment.id)" v-if="comment.userId == $user.userId || $user.admin == 1" :key="comment.id">Supprimer</span>
-            </div>
-            <div v-html="comment.content">{{comment.content}}</div>
-            </div>
-        </div>
-        
+            <template v-if="key!=0" v-for="(comment, key) in comments">
+              <div class="comment">
+                    <div class="comment-info">Par {{comment.user.firstname}} {{comment.user.lastname}} le {{dateFormat(comment.createdAt)}} 
+                        <span @click="deleteComment(comment.id)" v-if="comment.userId == $user.userId || $user.admin == 1" :key="comment.id">Supprimer</span>
+                    </div>
+                    <div v-html="comment.content">{{comment.content}}</div>
+             </div>
+            </template>
+        </div>   
   </div>
 </template>
 

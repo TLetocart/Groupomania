@@ -20,7 +20,7 @@ const Message = sequelize.define('message', {
     type: Sequelize.DataTypes.TEXT,
   },
   userId: {
-    field: 'userId',
+    field: 'user_id',
     type: Sequelize.DataTypes.INTEGER(10),
   },
 

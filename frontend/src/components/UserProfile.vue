@@ -2,7 +2,7 @@
     <div class="UserProfile">
         <div class="profile-info">
             <h2>Bonjour,</h2>
-            <span>{{this.$user.firstname}}</span> <span>{{this.$user.lastname}}</span>
+            <span>{{this.user.firstname}}</span> <span>{{this.user.lastname}}</span>
         </div>
 
         <div class="delete-profile" @click="deleteUser()">Supprimer le compte</div>
@@ -15,20 +15,38 @@
 import axios from 'axios';
 export default {
     name: 'UserProfile',
-  methods: {
-    deleteUser(){
-      const userId = this.$user.userId;
-      axios.delete(`${this.$apiUrl}/auth/${userId}`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${this.$token}`
+    data(){
+        return{
+            user : null
+        }
+    },
+    mounted(){
+        axios.get(`${this.$apiUrl}/auth/me`,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.$token}`
+              }
+            })
+        .then(response=>{
+          this.user=response.data
+        })
+      },
+    methods: {
+      
+      deleteUser(){
+        const userId = this.user.id;
+        axios.delete(`${this.$apiUrl}/auth/${userId}`,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.$token}`
+              }
             }
-          }
-      )
-      .then(localStorage.removeItem('user'))
-      .then(location.href = "/");
-    }
+        )
+       .then(localStorage.removeItem('user'))
+       .then(location.href = "/");
+      }
   }
 }
 </script>

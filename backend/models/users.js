@@ -30,7 +30,12 @@ const User = sequelize.define('user', {
     field: 'nom',
     type: Sequelize.DataTypes.TEXT,
   }
+  
+},
+{
+  tableName: 'user'
 });
+
 
 // Exportation du schema d'inscription
 module.exports = User;

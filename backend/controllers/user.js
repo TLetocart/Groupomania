@@ -6,6 +6,8 @@ const User = require('../models/users.js');
 
 // On utilise un token lors de la connexion de l'utilisateur, pour vérifier sa connexion
 const jwt = require('jsonwebtoken');
+const models = require('../models/index.js');
+const { request } = require('express');
 
 require("dotenv").config();
 
@@ -75,4 +77,28 @@ exports.login = (req, res, next) => {
     .catch(error => res.status(500).json({
       error: error
     }));
+};
+
+exports.deleteUser = (request, response, next) => {
+  models.user.destroy({
+    where : {id:request.userId}
+  }).then(user =>{
+    response.status(204).json([]);
+  }).catch(error =>{
+    return response.status(400).json({
+        error
+    })
+  });
+};
+
+exports.me = (request, response, next) => {
+  models.user.findOne({
+      where : {id:request.userId}
+    }).then(user =>{
+      response.status(200).json(user);
+    }).catch(error =>{
+      return response.status(404).json({
+          error
+      });
+  });
 };

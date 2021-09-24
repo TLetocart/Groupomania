@@ -21,13 +21,13 @@ const Conversation = sequelize.define('conversation', {
   },
 
   userId: {
-    field: 'userId',
+    field: 'user_id',
     type: Sequelize.DataTypes.INTEGER,
   },
   
 },
 {
-    tableName: 'conversation'
+    tableName: 'conversation',
 });
 
 

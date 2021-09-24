@@ -102,13 +102,14 @@ exports.getUserConversations = (request, response, next) => {
 
 
 exports.newComment = (request, response, next) => {
-    models.message.create({content: request.body.content, userId: request.userId, conversationId : request.params.id}).then(result =>{
+    models.message.create({content: request.body.content, userId: request.userId, conversationId : parseInt(request.params.id)}).then(result =>{
         response.status(201).json(result);
     }).catch(error =>{
         return response.status(400).json({
             error
         });
     });
+    console.log(request.params);
 };
 
 
@@ -120,6 +121,7 @@ exports.getAllComments = (request, response, next) => {
                 attributes:{ exclude: ['password']}
             },
         ],
+        where:{conversationId: request.params.id}
         
     }).then(result=>{
         return response.status(200).json(result);
